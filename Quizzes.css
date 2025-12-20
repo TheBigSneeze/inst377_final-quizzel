@@ -1,4 +1,10 @@
 
+body {
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+
+}
+
+
 .nav-list {
     list-style: none;
     justify-content: center;
@@ -22,7 +28,7 @@
 }
 
 p {
-  max-width: 600px;
+  max-width: 800px;
   line-height: 2;
   margin-bottom: auto;
 
@@ -67,4 +73,40 @@ p {
 
 .help {
   list-style: none;
+}
+
+
+.quiz {
+  border: 5px solid rgb(136, 129, 53);
+  margin: 10px;
+  padding: 20px;
+  
+}
+.quiz-container {
+    display: inline-block;
+    margin-top: 10px;
+    transition: transform .5s ease;
+    
+}
+
+
+.arrow-right {
+  display: inline-block;
+  width: 33px;
+  height: 33px;
+  border: 10px solid #333;
+  border-left: 0;
+  border-top: 0;
+  background: none;
+  transform: rotate(315deg);
+  transition: border-color 1s ease ;
+}
+
+.arrow-right:hover,.arrow-right:focus {
+  border-color: green;
+
+}
+
+.quiz:hover .quiz-container {
+  transform: translateX(50px);
 }
