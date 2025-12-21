@@ -20,7 +20,7 @@ export default async function handler(req, res) {
   }
 
   if (req.method === 'POST') {
-    const { name, quiz, score } = req.body;
+    const { name, quiz, answer } = req.body;
 
     const { data, error } = await supabase
       .from('quiz_answers')
