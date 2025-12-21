@@ -14,5 +14,61 @@
         </nav>
         <h1> What should I cook?</h1>
         
-    </body>
-</html>
+<form id="quizForm">
+    <p>How much time do you have?</p>
+    <label><input type="radio" name="time" value="quick" required> 15–30 minutes</label><br>
+    <label><input type="radio" name="time" value="medium"> 30–60 minutes</label><br>
+
+    <p>What are you craving?</p>
+    <label><input type="radio" name="craving" value="healthy" required> Healthy</label><br>
+    <label><input type="radio" name="craving" value="comfort"> Comfort food</label><br>
+
+    <br>
+    <button type="submit">Get My Result</button>
+</form>
+
+<div id="result"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+const form = document.getElementById('quizForm');
+const resultDiv = document.getElementById('result');
+
+form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const time = document.querySelector('input[name="time"]:checked').value;
+    const craving = document.querySelector('input[name="craving"]:checked').value;
+
+    let meal = '';
+
+    if (time === 'quick' && craving === 'healthy') {
+        meal = 'Salad Bowl';
+    } else if (time === 'quick' && craving === 'comfort') {
+        meal = 'Grilled Cheese';
+    } else if (time === 'medium' && craving === 'healthy') {
+        meal = 'Stir Fry';
+    } else {
+        meal = 'Pasta';
+    }
+
+    resultDiv.innerHTML = `<h2>You should cook: ${meal}</h2>`;
+
+    await fetch('/api/scores', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: 'Anonymous',
+            quiz: 'Quiz 1',
+            score: meal
+        })
+    });
+
+    Swal.fire({
+        title: 'Result Saved!',
+        text: 'Your quiz result was saved successfully.',
+        icon: 'success'
+    });
+});
+</script>
