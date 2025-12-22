@@ -56,4 +56,36 @@
     </body>
 </html>
 
+<script>
+fetch('/api/answers')
+  .then(res => res.json())
+  .then(data => {
+    console.log('All quiz results:', data);
+  });
+</script>
 
+    </body>
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<canvas id="resultsChart"></canvas>
+
+<script>
+fetch('/api/answers')
+  .then(res => res.json())
+  .then(data => {
+    const labels = data.map(d => d.quiz);
+    const values = data.map((_, i) => i + 1);
+
+    new Chart(document.getElementById('resultsChart'), {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          label: 'Quiz Submissions',
+          data: values
+        }]
+      }
+    });
+  });
+</script>
