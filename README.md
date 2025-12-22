@@ -1,6 +1,17 @@
 # INST377_Final-Quizzes
 For the INST377 Final project
-1. Quizzle
-2. Our project was to make a quiz like website that would help people decide on different things, such as what they wanted to eat, what they wanted to do, or what they wanted to watch
-3. It would  have been a helpful app for all types of Mobile Device.
-4.
+
+Quizzle
+The Idea Creator!
+
+Our web application develops ideas for our users. Whether it is a meal, hobby, movie recommendation or other challenge. Our application gives ideas on these topics, based on customizations to help give them ideas on what to do!
+
+Our application is for anyone on any device type.
+
+Link to Developer Manual
+
+We used Quizapi and Supabase as api.
+
+Vercel project url: ​​https://inst377-x6gt-eqwonz0i7-tamiyaaphillips-arts-projects.vercel.app/index.html
+
+Github link: https://github.com/tamiyaaphillips-art/inst377/tree/main
