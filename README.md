@@ -12,6 +12,5 @@ Link to Developer Manual
 
 We used Quizapi and Supabase as api.
 
-Vercel project url: ​​https://inst377-x6gt-eqwonz0i7-tamiyaaphillips-arts-projects.vercel.app/index.html
-
+Vercel project url: inst377final-quizzel.vercel.app
 Github link: https://github.com/tamiyaaphillips-art/inst377/tree/main
