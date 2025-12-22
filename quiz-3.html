@@ -13,6 +13,118 @@
             </ol>
         </nav>
         <h1> What should I watch??</h1>
+    <form id="quizForm">
+
+        <p>How long do you have?</p>
+        <label><input type="radio" name="time" value="short" required>Under 1 hour</label><br>
+        <label><input type="radio" name="time" value="long"> Two to Three Hours </label><br>
+
+        <p>Do you want to have suspense?</p>
+        <label><input type="radio" name="suspense" value="suspenseful" required> Yes</label><br>
+        <label><input type="radio" name="suspense" value="unsuspenseful"> No</label><br>
+
+        <p>What Genre?</p>
+        <label><input type="radio" name="genre" value="horror" required> horror</label><br>
+        <label><input type="radio" name="genre" value="fantasy"> fantasy</label><br>
+        <label><input type="radio" name="genre" value="adventure"> adventure</label><br>
+
+        <br>
+        <button type="submit">Get My Result</button>
+    </form>
+
+        <div id="result"></div>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+        const form = document.getElementById('quizForm');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const time = document.querySelector('input[name="time"]:checked').value;
+            const suspense = document.querySelector('input[name="suspense"]:checked').value;
+            const genre = document.querySelector('input[name="genre"]:checked').value;
+            let Activity = '';
+
+            if (time === 'short' && genre === 'horror' 
+                && suspense === 'suspenseful') {
+                Activity = 'Watch The Anime, Another(2012)';
+
+            } else if (time === 'short' && genre === 'horror' 
+                && suspense === 'unsuspenseful') {
+                Activity = 'Watch The Cartoon, Courage the Cowardly Dog(1999)';
+
+            } else if (time === 'long' && genre === 'horror' 
+                && suspense === 'suspenseful') {
+                Activity = 'Watch A Quiet Place(2018)';
+
+            } else if (time === 'long' && genre === 'horror' 
+                && suspense === 'unsuspenseful') {
+                Activity = 'Watch Five Nights at Freddys(2023)'
+
+            } else if (time === 'short' && genre === 'fantasy' 
+                && suspense === 'suspenseful') {
+                Activity = 'Watch The Cartoon, Adventure time(2010)';
+
+            } else if (time === 'short' && genre === 'fantasy' 
+                && suspense === 'unsuspenseful') {
+                Activity = 'Watch The Anime, Chilling in my 30s after getting fired from the Demon Kings Army(2023)';
+
+            } else if (time === 'long' && genre === 'fantasy' 
+                && suspense === 'unsuspenseful') {
+                Activity = 'Watch The Minecraft Movie(2025)';
+
+            } else if (time === 'long' && genre === 'fantasy' 
+                && suspense === 'suspenseful') {
+                Activity = 'Watch The Harry Potter Movies';
+
+            } else if (time === 'short' && genre === 'adventure' 
+                && suspense === 'suspenseful') {
+                Activity = 'Watch Indiana Jones(1981)';
+
+            } else if (time === 'short' && genre === 'adventure' 
+                && suspense === 'unsuspenseful') {
+                Activity = 'Watch Pokemon (1997)';
+
+            } else if (time === 'long' && genre === 'adventure' 
+                && suspense === 'unsuspenseful') {
+                Activity = 'Watch The Movie, National Treasure(2004) ';
+
+            } else if (time === 'long' && genre === 'adventure' 
+                && suspense === 'suspenseful') {
+                Activity = 'Watch The Movie, Killer of Killers(2025) ';
+
+            }else {
+                Activity= 'Scroll through YouTube and watch anything!'
+            }
+
+            resultDiv.innerHTML = `<h2>You should : ${Activity}</h2>`;
+
+            await fetch('/api/answers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: 'Anonymous',
+                    quiz: 'Quiz 3',
+                    answer: Activity
+                })
+            });
+
+            Swal.fire({
+                title: 'Result Saved!',
+                text: 'Your quiz result was saved successfully.',
+                icon: 'success'
+            });
+        });
+        </script>
+
+        <script>
+        fetch('/api/answers')
+            .then(res => res.json())
+            .then(data => console.log('Saved results:', data));
+        </script>
         
     </body>
 </html>

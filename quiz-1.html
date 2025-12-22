@@ -14,68 +14,115 @@
         </nav>
         <h1> What should I cook?</h1>
         
-<form id="quizForm">
-    <p>How much time do you have?</p>
-    <label><input type="radio" name="time" value="quick" required> 15–30 minutes</label><br>
-    <label><input type="radio" name="time" value="medium"> 30–60 minutes</label><br>
+    <form id="quizForm">
+        <p>How much time do you have?</p>
+        <label><input type="radio" name="time" value="quick" required> 15–30 minutes</label><br>
+        <label><input type="radio" name="time" value="medium"> 30–60 minutes</label><br>
 
-    <p>What are you craving?</p>
-    <label><input type="radio" name="craving" value="healthy" required> Healthy</label><br>
-    <label><input type="radio" name="craving" value="comfort"> Comfort food</label><br>
+        <p>What are you craving?</p>
+        <label><input type="radio" name="craving" value="healthy" required> Healthy</label><br>
+        <label><input type="radio" name="craving" value="comfort"> Comfort food</label><br>
 
-    <br>
-    <button type="submit">Get My Result</button>
-</form>
+        <p>How much effort are you willing to put in?</p>
+        <label><input type="radio" name="effort" value="a little" required> Not Much</label><br>
+        <label><input type="radio" name="effort" value="some"> I'll work </label><br>
 
-<div id="result"></div>
+        <p>How hungry are you?</p>
+        <label><input type="radio" name="hunger" value="not really" required> Peckish</label><br>
+        <label><input type="radio" name="hunger" value="starving"> Famish</label><br>
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        
 
-<script>
-const form = document.getElementById('quizForm');
-const resultDiv = document.getElementById('result');
 
-form.addEventListener('submit', async (e) => {
-    e.preventDefault();
 
-    const time = document.querySelector('input[name="time"]:checked').value;
-    const craving = document.querySelector('input[name="craving"]:checked').value;
+        <br>
+        <button type="submit">Get My Result</button>
+    </form>
 
-    let meal = '';
+        <div id="result"></div>
 
-    if (time === 'quick' && craving === 'healthy') {
-        meal = 'Salad Bowl';
-    } else if (time === 'quick' && craving === 'comfort') {
-        meal = 'Grilled Cheese';
-    } else if (time === 'medium' && craving === 'healthy') {
-        meal = 'Stir Fry';
-    } else {
-        meal = 'Pasta';
-    }
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    resultDiv.innerHTML = `<h2>You should cook: ${meal}</h2>`;
+        <script>
+        const form = document.getElementById('quizForm');
+        const resultDiv = document.getElementById('result');
 
-    await fetch('/api/scores', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            name: 'Anonymous',
-            quiz: 'Quiz 1',
-            score: meal
-        })
-    });
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
 
-    Swal.fire({
-        title: 'Result Saved!',
-        text: 'Your quiz result was saved successfully.',
-        icon: 'success'
-    });
-});
-</script>
+            const time = document.querySelector('input[name="time"]:checked').value;
+            const craving = document.querySelector('input[name="craving"]:checked').value;
+            const effort = document.querySelector('input[name="effort"]:checked').value;
+            const hunger = document.querySelector('input[name="hunger"]:checked').value;
 
-<script>
-fetch('/api/scores')
-    .then(res => res.json())
-    .then(data => console.log('Saved results:', data));
-</script>
+            let meal = '';
 
+            if (time === 'quick' && craving === 'healthy' 
+                && effort === "a little" && hunger ==="not really") {
+                meal = 'Salad Bowl';
+            } else if (time === 'quick' && craving === 'healthy' 
+                && effort === 'a little' && hunger ==='starving') {
+                meal = ' Smoothie With Added Vegetables';
+            } else if (time === 'quick' && craving === 'healthy' 
+                && effort === 'some' && hunger ==='not really') {
+                meal = 'Chicken Rice Bowl';
+            } else if (time === 'quick' && craving === 'healthy' 
+                && effort === 'some' && hunger ==='starving') {
+                meal = 'Chicken Stir fry';                
+            } else if (time === 'quick' && craving === 'comfort'
+                && effort === 'some' && hunger ==='starving') {
+                meal = 'Grilled Cheese';
+            } else if (time === 'quick' && craving === 'comfort'
+                && effort === 'a little' && hunger ==='starving') {
+                meal = 'Instant Ramen';
+            } else if (time === 'quick' && craving === 'comfort'
+                && effort === 'a little' && hunger ==='not really') {
+                meal = 'Ice Cream';
+            } else if (time === 'quick' && craving === 'comfort'
+                && effort === 'some' && hunger ==='not really') {
+                meal = 'PBJ';
+            } else if (time === 'medium' && craving === 'healthy'
+                && effort === 'some' && hunger ==='not really') {
+                meal = 'Sheppards Pie';
+            } else if (time === 'medium' && craving === 'healthy'
+                && effort === 'a little' && hunger ==='not really') {
+                meal = 'Chicken Noodle Soup';
+            } else if (time === 'medium' && craving === 'healthy'
+                && effort === 'some' && hunger ==='starving') {
+                meal = 'Grilled Steak and Eggs';
+            } else if (time === 'medium' && craving === 'healthy'
+                && effort === 'a little' && hunger ==='starving') {
+                meal = 'Beans and Rice';
+            } else {
+                meal = 'Pasta';
+            }
+
+            resultDiv.innerHTML = `<h2>You should cook: ${meal}</h2>`;
+
+            await fetch('/api/answers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: 'Anonymous',
+                    quiz: 'Quiz 1',
+                    answer: meal
+                })
+            });
+
+            Swal.fire({
+                title: 'Result Saved!',
+                text: 'Your quiz result was saved successfully.',
+                icon: 'success'
+            });
+        });
+        </script>
+
+        <script>
+        fetch('/api/answers')
+            .then(res => res.json())
+            .then(data => console.log('Saved results:', data));
+        </script>
+
+    </body>
+
+</html>

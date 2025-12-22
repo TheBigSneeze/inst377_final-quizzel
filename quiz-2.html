@@ -13,6 +13,140 @@
             </ol>
         </nav>
         <h1> What should I do?</h1>
+    <form id="quizForm">
+
+        <p>How much time are you willing to spend?</p>
+        <label><input type="radio" name="time" value="short" required>15-30 minutes</label><br>
+        <label><input type="radio" name="time" value="long"> 30+ </label><br>
+
+        <p>Do you feel like moving around?</p>
+        <label><input type="radio" name="movement" value="move" required> Yes</label><br>
+        <label><input type="radio" name="movement" value="idle"> No</label><br>
+
+        <p>Do you want to watch or play something?</p>
+        <label><input type="radio" name="watch" value="watch" required> Yes</label><br>
+        <label><input type="radio" name="watch" value="play"> Play</label><br>
+
+        <p>Want to hang out with friends??</p>
+        <label><input type="radio" name="friends" value="solo" required> I need alone time</label><br>
+        <label><input type="radio" name="friends" value="with others"> Sure</label><br>
+
+        <br>
+        <button type="submit">Get My Result</button>
+    </form>
+
+        <div id="result"></div>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+        const form = document.getElementById('quizForm');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const time = document.querySelector('input[name="time"]:checked').value;
+            const movement = document.querySelector('input[name="movement"]:checked').value;
+            const watch = document.querySelector('input[name="watch"]:checked').value;
+            const friends = document.querySelector('input[name="friends"]:checked').value;
+
+            let Activity = '';
+
+            if (time === 'short' && movement === 'move' 
+                && watch === 'watch' && friends ==='solo') {
+                Activity = 'Watch Some Home Exercise videos';
+
+            } else if (time === 'short' && movement === 'move' 
+                && watch === 'watch' && friends ==='with others') {
+                Activity = 'Take a stroll with a friend';
+
+            } else if (time === 'short' && movement === 'move' 
+                && watch === 'play' && friends ==='solo') {
+                Activity = 'Do Some Quick Exercises';
+
+            } else if (time === 'short' && movement === 'move' 
+                && watch === 'play' && friends ==='with others') {
+                Activity = 'Play Some Party Games';
+
+            } else if (time === 'short' && movement === 'idle' 
+                && watch === 'watch' && friends ==='solo') {
+                Activity = 'Watch a Quick Episode of a Show';
+
+            } else if (time === 'short' && movement === 'idle' 
+                && watch === 'watch' && friends ==='with others') {
+                Activity = 'Share Memes';
+            
+            } else if (time === 'short' && movement === 'idle' 
+                && watch === 'play' && friends ==='solo') {
+                Activity = 'Play a Quick Single Player Game';
+            
+            } else if (time === 'short' && movement === 'idle' 
+                && watch === 'play' && friends ==='with others') {
+                Activity = 'Play a Board Game';
         
+            } else if (time === 'long' && movement === 'move' 
+                && watch === 'play' && friends ==='solo') {
+                Activity = 'Play a VR Game'; 
+        
+            } else if (time === 'long' && movement === 'move' 
+                && watch === 'watch' && friends ==='solo') {
+                Activity = 'Go out on a long run';      
+        
+            } else if (time === 'long' && movement === 'move' 
+                && watch === 'play' && friends ==='with others') {
+                Activity = 'Play some Sports';   
+          
+            } else if (time === 'long' && movement === 'move' 
+                && watch === 'watch' && friends ==='with others') {
+                Activity = 'Go out with friends';   
+          
+            } else if (time === 'long' && movement === 'idle' 
+                && watch === 'watch' && friends ==='with others') {
+                Activity = 'Go to the movies with your buddies';   
+          
+            } else if (time === 'long' && movement === 'idle' 
+                && watch === 'play' && friends ==='solo') {
+                Activity = 'Play some long Video games'; 
+                
+            } else if (time === 'long' && movement === 'idle' 
+                && watch === 'play' && friends ==='with others') {
+                Activity = 'Play an MMO';     
+
+            } else if (time === 'long' && movement === 'idle' 
+                && watch === 'watch' && friends ==='solo') {
+                Activity = 'Watch a Movie';     
+ 
+            }else {
+                Activity= 'Eat some Food and Relax'
+            }
+
+            resultDiv.innerHTML = `<h2>You should : ${Activity}</h2>`;
+
+            await fetch('/api/answers', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: 'Anonymous',
+                    quiz: 'Quiz 2',
+                    answer: Activity
+                })
+            });
+
+            Swal.fire({
+                title: 'Result Saved!',
+                text: 'Your quiz result was saved successfully.',
+                icon: 'success'
+            });
+        });
+        </script>
+
+        <script>
+        fetch('/api/answers')
+            .then(res => res.json())
+            .then(data => console.log('Saved results:', data));
+        </script>
+
     </body>
+
 </html>
